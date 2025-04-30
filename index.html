@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Educativo - Metodología de Investigación</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="importmap">
+      {
+        "imports": {}
+      }
+    </script>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Login View -->
+        <div id="login-view" class="view active">
+            <div class="auth-header">
+                <img src="https://via.placeholder.com/150x150?text=Logo" alt="Universidad Logo" class="university-logo">
+                <h1>Asistente de Metodología de Investigación</h1>
+            </div>
+            <div class="card auth-card">
+                <h2><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</h2>
+                <p>Accede con tu cuenta institucional</p>
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email-input" placeholder="usuario@autonoma.edu.pe">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password-input" placeholder="Contraseña">
+                </div>
+                <p id="login-error" class="error-message"></p>
+                <button id="login-button" class="primary-button">Ingresar</button>
+                <p class="auth-link">¿No tienes cuenta? <a href="#" id="register-link">Regístrate aquí</a></p>
+                <p class="small-note">Nota: Para fines de demostración, puedes usar: estudiante@autonoma.edu.pe / estudiante123</p>
+            </div>
+        </div>
+
+        <!-- Register View -->
+        <div id="register-view" class="view">
+            <div class="auth-header">
+                <img src="https://via.placeholder.com/150x150?text=Logo" alt="Universidad Logo" class="university-logo">
+                <h1>Asistente de Metodología de Investigación</h1>
+            </div>
+            <div class="card auth-card">
+                <h2><i class="fas fa-user-plus"></i> Crear Cuenta</h2>
+                <p>Regístrate con tu correo institucional</p>
+                <form id="register-form">
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="register-name-input" placeholder="Nombre completo">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="register-email-input" placeholder="usuario@autonoma.edu.pe">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="register-password-input" placeholder="Contraseña">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="register-confirm-password-input" placeholder="Confirmar contraseña">
+                    </div>
+                    <p id="register-error" class="error-message"></p>
+                    <button type="button" id="register-button" class="primary-button">Registrarse</button>
+                </form>
+                <p class="auth-link">¿Ya tienes cuenta? <a href="#" id="login-link">Inicia sesión</a></p>
+            </div>
+        </div>
+
+        <!-- Topic Selection View -->
+        <div id="topic-selection-view" class="view">
+            <div class="app-header">
+                <div class="header-content">
+                    <h2><i class="fas fa-book"></i> Metodología de Investigación</h2>
+                    <div class="user-info">
+                        <span id="user-name-display"></span>
+                        <span id="user-email-display"></span>
+                        <button id="logout-button" class="small-button"><i class="fas fa-sign-out-alt"></i> Salir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="content-container">
+                <h3><i class="fas fa-list-ul"></i> Selecciona un Tema</h3>
+                <div id="topic-list" class="card topic-list-card">
+                    <!-- Topics will be loaded here by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat View -->
+        <div id="chat-view" class="view">
+            <div class="app-header">
+                <div class="header-content">
+                    <h2 id="chat-topic-title"></h2>
+                    <button id="chat-back-button" class="small-button"><i class="fas fa-arrow-left"></i> Volver a Temas</button>
+                </div>
+            </div>
+            <div class="content-container">
+                <div class="card chat-container">
+                    <h3><i class="fas fa-comments"></i> Repaso Interactivo del Tema</h3>
+                    <div id="chat-messages">
+                        <!-- Chat messages will appear here -->
+                        <div class="message system-message">
+                            <p>Hola! Soy tu asistente para Metodología de la Investigación. Puedes preguntarme sobre el resumen del tema a continuación o cualquier duda que tengas sobre <strong id="chat-topic-context"></strong>.</p>
+                        </div>
+                        <div class="message system-message">
+                            <strong>Resumen:</strong>
+                            <p id="topic-summary"></p>
+                        </div>
+                    </div>
+                    <div id="chat-input-area">
+                        <textarea id="chat-input" placeholder="Escribe tu pregunta aquí..."></textarea>
+                        <button id="send-chat-button"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <div id="chat-loading" class="loading-indicator" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Pensando...
+                    </div>
+                    <p id="chat-error" class="error-message"></p>
+                    <button id="start-quiz-button" class="primary-button"><i class="fas fa-tasks"></i> Iniciar Preguntas</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="quiz-view" class="view">
+            <div class="app-header">
+                <div class="header-content">
+                    <h2 id="quiz-topic-title"></h2>
+                    <div id="timer"><i class="fas fa-clock"></i> Tiempo restante: 15:00</div>
+                </div>
+            </div>
+            <div class="content-container">
+                <div class="card quiz-content">
+                    <h3><i class="fas fa-question-circle"></i> Evaluación de Conocimientos</h3>
+                    <form id="quiz-form">
+                        <!-- Questions will be loaded here by JS -->
+                    </form>
+                    <button id="submit-quiz-button" class="primary-button"><i class="fas fa-check-circle"></i> Finalizar Intento</button>
+                    <p id="quiz-message" class="error-message"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results View -->
+        <div id="results-view" class="view">
+            <div class="app-header">
+                <div class="header-content">
+                    <h2>Resultados del Quiz</h2>
+                </div>
+            </div>
+            <div class="content-container">
+                <div class="card results-content">
+                    <h3 id="results-topic-title"></h3>
+                    <div class="score-container">
+                        <i class="fas fa-award"></i>
+                        <p>Tu puntuación: <span id="score"></span></p>
+                    </div>
+                    <div id="results-details">
+                        <!-- Detailed results will be loaded here by JS -->
+                    </div>
+                    <h3><i class="fas fa-lightbulb"></i> Recomendaciones:</h3>
+                    <p id="recommendations"></p>
+                    <div class="results-actions">
+                        <button id="try-again-button" class="secondary-button"><i class="fas fa-redo"></i> Volver a Intentar</button>
+                        <button id="results-back-button" class="primary-button"><i class="fas fa-list"></i> Seleccionar Otro Tema</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
